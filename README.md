@@ -1,2 +1,2 @@
 # SolarShed
-Realtime data monitoring of solar power equipment metrics
+Realtime data monitoring and control of solar power equipment metrics
