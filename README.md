@@ -7,7 +7,7 @@ Once Raspian light OS (no GUI) is installed, the monitoring suite of
 Grafana, Prometheus and node_exporter are installed and configured.
 
 Before continuing you need to have node_exporter showing all your system metrics in Grafana.
-For example, memory, disk and CPU usage. Load and nwtork thoughput, errors etc.
+For example, memory, disk and CPU usage, load and network thoughput, errors etc.
 This is easy to achieve and very well documented as node_exporter is the #1 use of Grafana
 
 Once working, its easy to add additional metrics and make your own dashboards.
