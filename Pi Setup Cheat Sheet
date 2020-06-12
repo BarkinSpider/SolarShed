@@ -192,7 +192,11 @@ Now we can start to add our own Solar monitoring metrics and graph them
 
 First reboot machine with 'init 6' and confirm everything still works after a restart.
 
+You can stop here if you just want to get node_exporter working and wait until you have your own data to import.
+
 ######################### End ######################
+
+########## Additional notes - can be ignored ##########
 https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6
 https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
 
