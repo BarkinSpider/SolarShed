@@ -1,4 +1,4 @@
-# Install Raspian light and SolarMon tools(no GUI)
+# Install Raspian light and Grafana / Prometheus and node_exporter (no GUI)
 # v0.4e	- 9/6/2020
 # Allow at least 30 mins to do full install
 # You must be connected to the Internet for updates and downloads
