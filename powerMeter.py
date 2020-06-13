@@ -5,6 +5,7 @@
 
 # this script assumes you have 2 modbus serial connections
 # to morninggroup AC data collectors.
+# data is written in prometheus compatible format in /ramdisk 
 
 import minimalmodbus
 import serial, time, sys, os
