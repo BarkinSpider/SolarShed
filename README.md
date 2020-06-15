@@ -19,3 +19,8 @@ If you want more info or get stuck, here is additonal information and graphical
 guide to setting up node_exporter on any system.
 
 https://devconnected.com/complete-node-exporter-mastery-with-prometheus/
+
+Once working, all my scripts output data to the folder /ramdisk
+Only data written there will be available for monitoring
+as that is where node_exporter expect to find it.
+
