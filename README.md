@@ -3,8 +3,8 @@ Goal - Realtime data monitoring and control of solar equipment.
 (this is an active project - im updating this page regularly - Jun 2020)
 
 Most of the projects here are based around using a Raspberry Pi Zero or Pi 4 hardware.
-Once Raspian light OS (no GUI) is installed, and the changes made in my chest sheet are done, 
-the monitoring suite of Grafana, Prometheus and node_exporter are installed and configured ready for use.
+Once Raspian light OS (no GUI) is installed, and the changes made in my cheat sheet are done, 
+the monitoring suite of Grafana, Prometheus and node_exporter will be installed and configured ready for use.
 
 Before installing any extra minitoring programs you need to have node_exporter collecting and showing all your system metrics in Grafana.
 For example, memory, disk and CPU usage, load and network thoughput, errors etc.
