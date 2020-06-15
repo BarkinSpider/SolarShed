@@ -181,6 +181,4 @@ while(True):
  
     totalWatts = 0
 
-    time.sleep(2)
-
 # End.
