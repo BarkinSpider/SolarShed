@@ -6,7 +6,7 @@ Most of the projects here are based around using a Raspberry Pi Zero or Pi 4 har
 Once Raspian light OS (no GUI) is installed, and the changes made in my cheat sheet are done, 
 the monitoring suite of Grafana, Prometheus and node_exporter will be installed and configured ready for use.
 
-Before installing any extra minitoring programs you need to have node_exporter collecting and showing all your system metrics in Grafana.
+Before installing any extra monitoring programs you need to have node_exporter collecting and showing all your system metrics in Grafana.
 For example, memory, disk and CPU usage, load and network thoughput, errors etc.
 This is easy to achieve and very well documented as node_exporter is the #1 use of Grafana.
 
