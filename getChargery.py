@@ -3,6 +3,7 @@
 # getChargeryData.py
 # Description: open RS232 serial port and read Chargery BMS data.
 # Output data in a format to be consumed by nodeexporter/prometheus/grafana
+# it expect to find a folder /ramdisk to write to.
 # v0.4a 5-16-20Joe Elliott joe@inetd.com
 # Protocol at http://chargery.com/uploadFiles/bms24_additional_protocol%20V1.22.pdf
 
@@ -11,7 +12,7 @@ import sys, os, io
 import time
 import binascii
 
-devName='/dev/usb3'
+devName='/dev/usb0'
 
 modeList= ["Discharge", "Charge", "Storage"]
 gotCellData = False;
