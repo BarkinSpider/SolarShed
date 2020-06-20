@@ -34,7 +34,7 @@ guide to setting up node_exporter on any system.
 https://devconnected.com/complete-node-exporter-mastery-with-prometheus/
 
 Once working, all my scripts output data to the folder /ramdisk
+/ramdisk is a memory filesystem folder I custom configure to increase performance and avoid read/write issues with SSD cards.
 
-Only data written to /ramdisk will be available for monitoring using my system
-as that is where node_exporter is configured to find it.
+Only data written to /ramdisk will be available for monitoring with Grafana when using my system, as that is where node_exporter is configured to find it. node_exporter is the service that loads data into the Prometheus database so that Grafana can find it, and display the information graphically.
 
