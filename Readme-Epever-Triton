@@ -1,0 +1,33 @@
+The Epever Triton solar chargers work with an RS485 interface that uses a special kernel module.
+Download the source from the link below and compile it for your device. Works well with Raspberry Pi's.
+Be aware that Pi Zeros and Pi 3/54 are different binaries and you need to recompile if you change hardware.
+You may need to install gcc if you dont have a build environment. 
+# apt install gcc
+
+https://github.com/kasbert/epsolar-tracer/tree/master/xr_usb_serial_common-1a
+
+As root, cd to the source folder you just downloaded
+# make
+
+Now install the kernel module.
+# insmod ./xr_usb_serial_common.ko
+
+If you have installed the xr_usb module correctly, when you plug in your Epever cable into your Pi you should see /dev/ttyXRUSB0 appear.
+
+If it doesn't work, you may need to remove the competing CDC-ACM module. Check if cdc-acm is installed with 
+# lsmod | grep cdc
+
+if its there do
+# rmmod cdc-acm
+
+then ensure the cdc module is not reloaded next boot time
+
+# echo blacklist cdc-acm > /etc/modprobe.d/blacklist-cdc-acm.conf
+# update-initramfs -u
+
+Now try to install the xr module again and see if the correct /dev/ttyXRUSB0 interface appears
+# insmod ./xr_usb_serial_common.ko
+
+Tip: always run 'dmesg' and look at the last few lines after plugging/unplugging any USB interfaces, to see what the kernel thinks has changed. 
+
+
