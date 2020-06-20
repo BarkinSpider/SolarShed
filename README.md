@@ -2,6 +2,8 @@
 Goal - Realtime data monitoring and control of solar equipment.
 (this is an active project - im updating this page regularly - Jun 2020)
 
+Read the discussion of this project here: https://diysolarforum.com/threads/off-grid-solar-battery-monitoring-and-control-freeware.6662/
+
 Most of the projects here are based around using a Raspberry Pi Zero or Pi 4 hardware.
 
 For the Pi4 I chose this model with 4GB. https://www.amazon.com/gp/product/B07VYC6S56/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1
