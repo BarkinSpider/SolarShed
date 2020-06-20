@@ -12,7 +12,8 @@ As root, cd to the source folder you just downloaded
 Now install the kernel module.
 # insmod ./xr_usb_serial_common.ko
 
-If you have installed the xr_usb module correctly, when you plug in your Epever cable into your Pi you should see /dev/ttyXRUSB0 appear.
+If you have installed the xr_usb module correctly, when you plug in your Epever cable into your Pi 
+you should see /dev/ttyXRUSB0 appear.
 
 If it doesn't work, you may need to remove the competing CDC-ACM module. Check if cdc-acm is installed with 
 # lsmod | grep cdc
@@ -28,6 +29,7 @@ then ensure the cdc module is not reloaded next boot time
 Now try to install the xr module again and see if the correct /dev/ttyXRUSB0 interface appears
 # insmod ./xr_usb_serial_common.ko
 
-Tip: always run 'dmesg' and look at the last few lines after plugging/unplugging any USB interfaces, to see what the kernel thinks has changed. 
+Tip: always run 'dmesg' and look at the last few lines after plugging/unplugging any USB interfaces, 
+to see what the kernel thinks has changed. 
 
 
