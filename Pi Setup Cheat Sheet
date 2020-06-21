@@ -17,7 +17,7 @@ and easily login at boot after SSH enable.
 
 select Raspian minmal install only - this is key on the Pi Zero to save precious resources.
 
-# after install and reboot login at the console as pi:raspian  ....
+# after install and reboot login at the console as pi:raspian  ...
 % sudo bash
 # raspi-config 
 
