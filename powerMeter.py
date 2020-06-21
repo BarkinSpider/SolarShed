@@ -6,7 +6,7 @@
 # this script assumes you have 2 modbus serial connections
 # to morninggroup split core AC data collectors.
 # live data is written in prometheus compatible format in /ramdisk 
-# look for the prometheus tag QC_power in Grafana.
+# look for the prometheus tag QC_power in Grafana. 
 
 import minimalmodbus
 import serial, time, sys, os
