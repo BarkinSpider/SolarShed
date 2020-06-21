@@ -19,7 +19,7 @@
 #        $this->tracer->sendRawQuery("\x01\x05\x00\x02\xff\x00\x2d\xfa", false);
 #    }
 #
-#    //manually turn off
+#    //manually turn off 
 #    public function setLoadOff() {
 #        $this->tracer->sendRawQuery("\x01\x05\x00\x02\x00\x00\x6c\x0a", false);
 #    }
