@@ -3,7 +3,7 @@ Goal - Realtime data monitoring and control of solar equipment.
 (this is an active project - im updating this page regularly - Jun 2020)
 
 Read the discussion of this project here: https://diysolarforum.com/threads/off-grid-solar-battery-monitoring-and-control-freeware.6662/
-You can contact me by posting to the forum above.
+You can contact me by posting to the forum above. 
 
 Most of the projects here are based around using a Raspberry Pi Zero or Pi 4 hardware to read the serial output of compatible devices like charge controllers and display the information using Grafana. This allows you to monitor your solar system from any location using any device with a web browser, like your smartphone.
 
