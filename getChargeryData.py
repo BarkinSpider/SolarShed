@@ -16,7 +16,7 @@ devName='/dev/ttyUSB0'
 
 modeList= ["Discharge", "Charge", "Storage"]
 gotCellData = False;
-gotSysData  = False;
+gotSysData  = False; 
 debug=False
 
 if (len(sys.argv) > 1):
