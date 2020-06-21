@@ -18,7 +18,7 @@ you should see /dev/ttyXRUSB0 appear.
 If it doesn't work, you may need to remove the competing CDC-ACM module. Check if cdc-acm is installed with 
 # lsmod | grep cdc
 
-if its there do
+if its there, run
 # rmmod cdc-acm
 
 then ensure the cdc module is not reloaded next boot time
