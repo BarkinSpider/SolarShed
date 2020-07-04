@@ -38,3 +38,7 @@ Once working, all my monitoring scripts output data to the folder /ramdisk
 
 Only data written to /ramdisk will be available for monitoring with Grafana when using my system, as that is where node_exporter is configured to find it. node_exporter is the service that loads data into the Prometheus database so that Grafana can find it, and display the information graphically. 
 
+If you want to contact me or have any questions please post them at https://diysolarforum.com/threads/off-grid-solar-battery-monitoring-and-control-freeware.6662/
+
+Joe
+
