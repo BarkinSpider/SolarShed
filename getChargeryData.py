@@ -97,7 +97,8 @@ def getCellData(fileObj, hexLine, strLen):
 
 def getSysData(fileObj, hexLine, strLen):
         decStrLen = len(hexLine)
-        dataStart = 8   # data starts at byte 8 in 2 byte chunks (hi-lo)        minLen = 30     # minimal bytes inc header (each byte is 2 chars)
+        dataStart = 8   # data starts at byte 8 in 2 byte chunks (hi-lo)        
+        minLen = 30     # minimal bytes inc header (each byte is 2 chars)
         global gotSysData
 
         if (debug): print("getSysData: called - ", hexLine)
