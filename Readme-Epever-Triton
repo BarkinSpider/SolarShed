@@ -2,6 +2,8 @@ The Epever Triton solar chargers work with an RS485 interface that uses a specia
 Download the source from the link below and compile it for your device. Works well with Raspberry Pi's.
 Be aware that Pi Zeros and Pi 3/54 are different binaries and you need to recompile if you change hardware.
 You may need to install gcc if you dont have a build environment. 
+Also, My code for the Epever SCC only works with Python 2.7, not 3!
+
 # apt install gcc
 
 https://github.com/kasbert/epsolar-tracer/tree/master/xr_usb_serial_common-1a
