@@ -61,7 +61,7 @@ def getCellData(fileObj, hexLine, strLen):
         else:
                 if (debug): print("hexLine len", len(hexLine))
 
-        for cell in range(dataStart, dataStart + 32, 4):
+        for cell in range(dataStart, dataStart + 32, 4):    # Change 32 to 96 to support the BMS16
                 cellVolts = get_voltage_value(int(hexLine[cell:cell+2], 16), int(hexLine[cell+2:cell+4], 16))
                 if (debug): print("Cell ", cellNum, ":", cellVolts, "v")
                 # format the data for node_exporter to read into prometheus
