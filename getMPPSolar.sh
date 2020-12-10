@@ -11,7 +11,7 @@
 
 # create CPU & LoadAvg with # while :; do :; done
 # create DISK load with # find /usr -exec grep joe {} \;
-# create Network load with # ping -f 8.8.8.8
+# create Network load with # ping -f 8.8.8.8 
 
 debug=1
 unitName="1440w-3x4-120W LifePO4-16s2p 48v-320a/h 15.4kW/h"
