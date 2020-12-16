@@ -17,7 +17,7 @@ For storage, use the 32GB SD card, just a few dollars more than 16GB, and allows
 https://www.amazon.com/PNY-Elite-microSDHC-Memory-P-SDU32GU185GW-GE/dp/B01MY8WGV7/ref=sr_1_12?crid=2L2CRB2OOAP4X&dchild=1&keywords=32gb%2Bmicro%2Bsd%2Bcard&qid=1587993513&s=electronics&sprefix=32GB%2Bmicro%2Celectronics%2C214&sr=1-12&th=1
 
 Use this cool USB adapter to power your Pi Zero, it plugs right into any USB slot like on the Epever Triton series... https://www.amazon.com/gp/product/B07NKNBZYG/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1
-
+ 
 Then you run a usb/rs485 or RS232 cable (depending on what your connecting to) from the Pi, straight into the data port of the device you want to monitor. 
 I like these light weight PL2303 RS232 cables.
 https://www.amazon.com/gp/product/B07554Z4LX/ref=ppx_yo_dt_b_asin_title_o02_s01?ie=UTF8&psc=1
