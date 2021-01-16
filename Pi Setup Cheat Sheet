@@ -7,7 +7,7 @@
 Download Noobs Lite, unzip the file into a new folder Called Pi
 https://downloads.raspberrypi.org/NOOBS_lite_latest
 
-Format your microSD card on your Windows machine as a standard single fat32 partition 
+Format your microSD card on your Windows machine as a standard single fat32 partition
 and copy all the Pi directory contents onto the new disk
 
 Remove the MicroSD card and insert it into the Pi. Attach a keyboard/mouse/monitor and boot the Pi.
