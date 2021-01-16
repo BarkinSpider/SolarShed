@@ -1,25 +1,20 @@
-# Install Raspian light and Grafana / Prometheus and node_exporter (no GUI)
-# v0.4e	- 9/6/2020
+# Install Raspian light and SolarMon tools(no GUI)
+# v0.4k - 3/1/2021
 # Allow at least 30 mins to do full install
 # You must be connected to the Internet for updates and downloads
-# this cheat sheet assumes a basic understanding of Linux.
 
 Download Noobs Lite, unzip the file into a new folder Called Pi
 https://downloads.raspberrypi.org/NOOBS_lite_latest
+Format your microSD card on your Windows machine as a standard single fat32 partition and copy all the Pi directory contents onto the new
+disk
+Remove the MicroSD card and insert it into the Pi. Attach akeyboard/mouse/monitor and boot the Pi.
 
-Format your microSD card on your Windows machine as a standard single fat32 partition
-and copy all the Pi directory contents onto the new disk
-
-Remove the MicroSD card and insert it into the Pi. Attach a keyboard/mouse/monitor and boot the Pi.
-
-add WiFi networking to your home network at Noobs install so you can download updates 
-and easily login at boot after SSH enable.
-
+add WiFi networking to your home network at Noobs install so you can download updates and easily login at boot after SSH enable
 select Raspian minmal install only - this is key on the Pi Zero to save precious resources.
 
-# after install and reboot login at the console as pi:raspian  ...
+# after install and reboot login at the console as pi:raspian  ....
 % sudo bash
-# raspi-config 
+# raspi-config
 
 - change pi passwd
 - set hostname under 'network'
@@ -27,117 +22,117 @@ select Raspian minmal install only - this is key on the Pi Zero to save precious
 - set US 101 key PC keyboard with default settings
 - set timezone America/Los Angeles
 - enable SSH interface under 'Interfacing Options'
+- enable serial console
 
-exit from raspi-config when done
+exit from raspi-config
 
--- update firmware
-# rpi-update
+# edit /boot/config.txt (at end of file) to ensure serial console is enabled
+enable_uart=1
+earlycon=
 
--- update software
-# apt-get update
-# apt-get upgrade
+# update firmware
+rpi-update
 
--- get pip3 for python3 - all scripts must run Python3 not v2
-# apt-get install python3-pip
+# update software
+apt-get update
+apt-get upgrade
 
--- reboot with the new settings
-# init 6
+# get pip3 for python3 - all scripts must run Python3 not v2
+apt-get install python3-pip
+pip3 install pyserial
+pip3 install minimalmodbus
 
--- modify Wifi settings if needed ...
-# vi /etc/wpa_supplicant/wpa_supplicant.conf
+# reboot with the new settings
+init 6
+#### End ####
 
--- restart wifi network if you made changes
-# wpa_cli -i wlan0 reconfigure
+# modify Wifi settings if needed ...
+vi /etc/wpa_supplicant/wpa_supplicant.conf
+wpa_cli -i wlan0 reconfigure
 
--- test internet connection is good
-# ping inetd.com
- 
--- Add user solar - passwd 'solar' use defaults - copy your bash env to /home/solar and root home dirs
-# adduser solar
+# test internet connection is good
+ping inetd.com
 
--- set a password for user solar, dont forget it!
-# passwd solar
+# Add user solar - passwd 'solar' use defaults - copy your bash env to /home/solar and root home dirs
+adduser solar
+# enable sudo with no password
+vi /etc/sudoers.d/010_pi-nopasswd
 
--- enable sudo for user solar with no password - copy the line for user pi
--- and change pi to solar
-# vi /etc/sudoers.d/010_pi-nopasswd
-
--- change login banner
-# cat > /etc/motd
+# change login banner
+cat > /etc/motd
 
 Inetd.Com QC server - all activity monitored and logged.
 
-<ctrl-d>
-
--- create the ramdisk for ephemeral files
-# mkdir /ramdisk
-
-# cat >> /etc/fstab
+# create the ramdisk for ephemeral files
+cat >> /etc/fstab
 tmpfs /ramdisk tmpfs nodev,nosuid,size=1M 0 0
-<ctrl-d>
 
--- check ramdisk is mounted correctly
-# mount -a
-# df
+# check ramdisk is mounted correctly
+mkdir /ramdisk
+mount -a
+df
 
-now reboot and login remotely with SSH as user solar, check all your changes are working ok
+now reboot and login remotely with SSH as user solar, check all is working ok
 
-######### Setting up a Grafana server ############
+# Setting up as a Grafana server
 ( Check for new version - 7.0.3 used below)
-##################################################
+###########################################
 
--- boot Pi and login as user solar
-# cd /home/solar
-# sudo bash
+cd /home/solar
+sudo bash
+scp 192.168.1.5:~/.\* .
+scp 192.168.1.5:~/\*.txt .
+mkdir -p Dev/Grafana
+cd Dev/Grafana
 
--- this package is required by Grafana
-# apt-get install -y adduser libfontconfig1
+apt-get install -y adduser libfontconfig1
 
--- choose the latest version of Grafana for your device.
+Pi 4 hardware ARM 7
+wget https://dl.grafana.com/oss/release/grafana_7.3.6_armhf.deb
+dpkg -i grafana_7.3.6_armhf.deb
 
--- get Grafana for Pi Zero hardware (check for updated versions)
-# wget https://dl.grafana.com/oss/release/grafana-rpi_7.0.3_armhf.deb
-# sudo dpkg -i grafana-rpi_7.0.3_armhf.deb
+# Pi Zero hardware ARM 6
+wget https://dl.grafana.com/oss/release/grafana-rpi_7.3.6_armhf.deb
+dpkg -i grafana-rpi_7.3.6_armhf.deb
 
--- get Grafana for Pi 3/4 hardware (check for updated versions)
-# wget https://dl.grafana.com/oss/release/grafana_7.0.3_arm7.deb
-# sudo dpkg -i grafana_7.0.3_armhf.deb
+grafana-cli plugins install grafana-clock-panel
+grafana-cli plugins install briangann-gauge-panel
+grafana-cli plugins install dalvany-image-panel
+grafana-cli plugins install innius-video-panel
 
--- if you have trouble installing, try this
-# apt-get --fix-broken install
+apt-get --fix-broken install
 
--- configure Grafana to start automatically at boot
-# /bin/systemctl daemon-reload
-# /bin/systemctl enable grafana-server
-# /bin/systemctl start grafana-server
-# /bin/systemctl status grafana-server
+/bin/systemctl daemon-reload
+/bin/systemctl enable grafana-server
+/bin/systemctl start grafana-server
+/bin/systemctl status grafana-server
 
--- Download and install Prometheus and node_exporter
+# Download and install Prometheus and node_exporter
 
--- Pi Zero hardware
-# wget https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-armv6.tar.gz
-# wget https://github.com/prometheus/node_exporter/releases/download/v1.0.0/node_exporter-1.0.0.linux-armv6.tar.gz
+# Pi Zero hardware
+wget https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-armv6.tar.gz
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.0/node_exporter-1.0.0.linux-armv6.tar.gz
 
--- Pi 3/4 hardware
-# wget https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-armv7.tar.gz
-# wget https://github.com/prometheus/node_exporter/releases/download/v1.0.0/node_exporter-1.0.0.linux-armv7.tar.gz
+# Pi 4 hardware
+wget https://github.com/prometheus/prometheus/releases/download/v2.24.0-rc.0/prometheus-2.24.0-rc.0.linux-armv7.tar.gz
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-armv7.tar.gz
 
--- unpack the archives
-# tar xvzf prometheus-*.gz
-# tar xvzf node_exporter-*.gz
+tar xvzf prometheus-*.gz
+tar xvzf node_exporter-*.gz
 
--- cd to prometheus folder
+cd prometheus*[6,7]
 
--- Optional - Add prometheus to systemctl so it starts automatically at boottime
--- Configure Prometheus
-# cat > prometheus.yml
+Add prometheus to systemctl so they start automatically at boottime
+
+cat > prometheus.yml
 # Global config
 global:
   scrape_interval:     10s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
   scrape_timeout:      10s  # scrape_timeout is set to the global default (10s).
 #
-# Test with promtool check config /etc/prometheus/prometheus.yml
+# Test with
+# ./promtool check config prometheus.yml
 # and tail /var/log/messages
 #
 scrape_configs:
@@ -146,76 +141,70 @@ scrape_configs:
 - job_name: 'node'
   static_configs:
    - targets: ['localhost:9100']
-<ctrl-d>
 
--- run prometheus locally to ensure its working as expected...
-# ./prometheus
-
+# run locally to ensure its working as expected...
+./prometheus
 Should end with - msg="Server is ready to receive web requests."
-check interface at http://localhost:9090 on your web browser
-substitute 'localhost' with the IP address of your Pi
-enter 'node_load1' on the webform and press execute to see value and graph collected locally
+check interface at http://localhost:9090
+enter 'node_load1' and press execute to see value and graph collected locally
 
--- move to the node_exporter foler you just created
-# cd ../node_exporter....
-
--- node exporter is very simple to use, just start it with the following arguments
-# ./node_exporter --collector.textfile.directory=/ramdisk
-
+cd ../node_exporter*[6,7]
+./node_exporter --no-collector.mdadm --collector.textfile.directory=/ramdisk
 Should end with - msg="Listening on" address=:9100
-Check for data at http://localhost:9100/metrics with your web browser
-substitute 'localhost' with the IP address of your Pi
+Check for data at http://localhost:9100/metrics
 
--- Now its finally time to test the Grafana interface, bringing it all together!
-
-on a web browser, goto http://<ipaddr>:3000/login 
-The login/password is admin:admin 
-(skip updating passwd for now, or make it the same as your solar user password)
-
-add the datasource as prometheus - use the URL http://localhost:9090 - 
-then press Save&Test
-Then .... try
+# Now test Grafana interface
+goto http://<ipaddr>:3000/login admin:admin (skip updating passwd)
+In configuration menu, add datasource as prometheus URL http://localhost:9090 - then Save&Test
 Dashboard->Home
 + Create import
+Cut n paste JSON from a working panel - look for 'share->export' on top right
 
-Import example dashboard from
-https://grafana.com/grafana/dashboards?orderBy=name&direction=asc
-ID: 10242 is a good example of system metrics
-Do + -> Import on left of main page and Import ID 10242
-Select Prometheus as a data source
+# Ensure everything restarts after reboot
+chmod +x /etc/rc.local
+systemctl status rc-local.service
+# if problems - systemctl enable rc-local
+# does /etc/systemd/system/rc-local.service exist?
+[root@pi4]:(/home/joe) > cat /etc/systemd/system/rc-local.service
+[Unit]
+ Description=/etc/rc.local Compatibility
+ ConditionPathExists=/etc/rc.local
 
-Your new dashboard "Node Exporter Full with Node Name" should now be working
-Look for it under Dashboards->home or Dashboards->Manage and search for Node.
-Star the dasboard for easier access
-You can also cut n paste a JSON description from another working panel
-look for 'share->export' on top right
+[Service]
+ Type=forking
+ ExecStart=/etc/rc.local start
+ TimeoutSec=0
+ StandardOutput=tty
+ RemainAfterExit=yes
+ SysVStartPriority=99
 
+[Install]
+ WantedBy=multi-user.target
 
--- Now we configure the Pi to restart all the above when it reboots
+# Then - systemctl enable rc-local
 
-# chmod +x /etc/rc.local
-# systemctl status rc-local.service
--- if problems try - 
-# systemctl enable rc-local
-
--- add our start script to rc.local before the 'exit 0' line
+# add our scripts to rc.local before exit 0
 vi /etc/rc.local
 
+# Enable rc.local to start scripts
+chmod +x /etc/rc.local
+# Add before end of file
 (/home/solar/restartSys.sh) &
+domainname inetd.com
 
--- /home/solar/restartSys.sh contains your local collector scripts that dump data into the /ramdisk
--- edit a new script file and add the following lines. 
--- Modify the folder names to match your configuration.
-
+# /home/solar/restartSys.sh contains your local collector scripts that dump data into the /ramdisk
 # vi /home/solar/restartSys.sh
 
 #!/bin/bash
 #
-cd /home/solar/prometheus-2.19.0.linux-armv6
+cd /home/solar/Dev/Grafana/prometheus*[6,7]
 nohup ./prometheus &
 
-cd /home/solar/node_exporter-1.0.0.linux-armv6
-nohup ./node_exporter --collector.textfile.directory=/ramdisk &
+cd /home/solar/Dev/Grafana/node_exporter*[6,7]
+nohup ./node_exporter --no-collector.mdadm --collector.textfile.directory=/ramdisk &
+
+# Here we start our local collector script that puts data into /ramdisk
+# ./myScript.py
 
 # End
 
@@ -231,12 +220,120 @@ ID: 10242 is a good example of system metrics
 Do + -> Import on left of main page and Import ID 10242
 Select Prometheus as a data source
 
-
+Your new dashboard "Node Exporter Full with Node Name" should now be working
+Look for it under Dashboards->home or Dashboards->Manage and search for Node.
+Star the dasboard for easier access
 
 Now we can start to add our own Solar monitoring metrics and graph them
 
 First reboot machine with 'init 6' and confirm everything still works after a restart.
 
-You can stop here if you just want to get node_exporter working and wait until you have your own data to import.
-
 ######################### End ######################
+
+Additional notes -----
+
+https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6
+https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
+
+useradd -m -s /bin/bash prometheus
+untar prometheus in its home dir
+mkdir -p ~/prometheus/data
+
+useradd -m -s /bin/bash node_exporter
+untar node_exporter in its home dir
+
+vi /etc/systemd/system/node_exporter.service
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter --no-collector.mdadm --collector.textfile.directory=/ramdisk
+
+[Install]
+WantedBy=multi-user.target
+
+systemctl daemon-reload
+
+systemctl list-unit-files
+systemctl edit --full node_exporter
+systemctl status node_exporter
+systemctl show node_exporter
+systemctl cat node_exporter
+systemctl enable node_exporter
+systemctl disable node_exporter
+systemctl restart node_exporter
+
+#############################################
+# add your local scripts here, use /dev/usb* interfaces  - IMPORTANT!
+
+# cd /home/joe
+# ./pmAC2.py &
+
+--or-- use crontab to run a prog at start
+# crontab -e
+@reboot /home/joe/restartSys.sh
+
+#### For EPever inverter only ####
+cat > ~joe/runGetSolarData.tcsh
+#!/usr/bin/tcsh
+# Check correct kernel mod is installed
+insmod xr_usb_serial_common.ko
+echo starting Epever serial data collection
+while 1
+    /home/joe/Dev/EpSolar/epsolar-tracer-0.0.8/getTracerData.py > /ramdisk/solarData.txt.$$
+    sleep 1
+    date >> /ramdisk/solarData.txt.$$
+    mv /ramdisk/solarData.txt.$$ /ramdisk/solarData.txt
+    sleep 4
+end
+
+cx  ~joe/runGetSolarData.tcsh
+
+# for lsnet alias
+apt-get install arp-scan
+apt-get install lighttpd - for xtra reports only in /var/www/html/index.html
+
+#### For EPever ####
+pip3 install -U pymodbus
+pip3 install -U serial
+
+To compile kernel modules...
+# apt-get install raspberrypi-kernel-headers
+
+make module in /home/joe/Dev/xr_usb_serial_common-1a/
+cp xr_usb_serial_common.ko  /lib/modules/4.19.97+/kernel/drivers/tty/serial/
+
+# remove competing cdc module
+cat >> /etc/modprobe.d/blacklist-cdc_acm.conf
+blacklist cdc_acm
+
+echo "Start the Solar subsystem" >> /tmp/rc_test.txt.$$
+(/home/solar/restartSys.sh) &
+echo "ending rc.local" >> /tmp/rc_test.txt.$$
+
+grafana-cli plugins install grafana-clock-panel
+grafana-cli plugins install briangann-gauge-panel
+grafana-cli plugins install dalvany-image-panel
+grafana-cli plugins install innius-video-panel
+/bin/systemctl restart grafana-server
+
+####### Fix USB serial interfaces - must be rerun at each boot
+# Makes USB serial ports assignment consistent and not randomly assigned. Absolute, not relative.
+# Pi4 arch with built in 4 port USB hub
+ln -sf /dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.0:1.0-port0 /dev/usb0
+ln -sf /dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.1:1.0-port0 /dev/usb1
+ln -sf /dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.2:1.0-port0 /dev/usb2
+ln -sf /dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.3:1.0-port0 /dev/usb3
+ln -sf /dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.4:1.0-port0 /dev/usb4
+
+# Pi Zero arch with external 4 port USB hub
+#ln -s /dev/serial/by-path/platform-20980000.usb-usb-0:1.1:1.0-port0 /dev/usb1
+#ln -s /dev/serial/by-path/platform-20980000.usb-usb-0:1.2:1.0-port0 /dev/usb2
+#ln -s /dev/serial/by-path/platform-20980000.usb-usb-0:1.3:1.0-port0 /dev/usb3
+#ln -s /dev/serial/by-path/platform-20980000.usb-usb-0:1.4:1.0-port0 /dev/usb4
+#ln -s /dev/serial/by-path/platform-20980000.usb-usb-0:1.0:1.0-port0 /dev/usb0
+########
