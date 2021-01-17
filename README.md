@@ -1,6 +1,6 @@
 # SolarShed
 Goal - Realtime data monitoring and control of solar equipment.
-(this is an active project - im updating this page regularly - Dec 2020)
+(this is an active project - im updating this page regularly - Jan 2021)
 If you have any suggestions or see errors, please create an Issue, the link to do that is up above (Issues in the GitHub menubar)
 
 Read the discussion of this project here: https://diysolarforum.com/threads/off-grid-solar-battery-monitoring-and-control-freeware.6662/
