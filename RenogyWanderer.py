@@ -12,7 +12,7 @@
 import minimalmodbus
 import serial
 import sys, os, io
-import time
+import time 
 
 debug = False
 sleepTime = 10
