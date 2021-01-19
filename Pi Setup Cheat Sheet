@@ -75,13 +75,12 @@ df
 now reboot and login remotely with SSH as user solar, check all is working ok
 
 # Setting up as a Grafana server
-( Check for new version - 7.0.3 used below)
+( Check for new version - 7.3 used below)
 ###########################################
 
 cd /home/solar
 sudo bash
-scp 192.168.1.5:~/.\* .
-scp 192.168.1.5:~/\*.txt .
+
 mkdir -p Dev/Grafana
 cd Dev/Grafana
 
@@ -160,6 +159,10 @@ Dashboard->Home
 + Create import
 Cut n paste JSON from a working panel - look for 'share->export' on top right
 
+######################### End ######################
+
+######################### Additional notes - for debug only #########################
+
 # Ensure everything restarts after reboot
 chmod +x /etc/rc.local
 systemctl status rc-local.service
@@ -227,9 +230,6 @@ Star the dasboard for easier access
 Now we can start to add our own Solar monitoring metrics and graph them
 
 First reboot machine with 'init 6' and confirm everything still works after a restart.
-
-######################### End ######################
-
 Additional notes -----
 
 https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6
