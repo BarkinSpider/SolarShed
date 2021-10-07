@@ -12,7 +12,7 @@ Remove the MicroSD card and insert it into the Pi. Attach akeyboard/mouse/monito
 add WiFi networking to your home network at Noobs install so you can download updates and easily login at boot after SSH enable
 select Raspian minmal install only - this is key on the Pi Zero to save precious resources.
 
-# after install and reboot login at the console as pi:raspian  ....
+# after install and reboot login at the console as pi:raspberry  ....
 % sudo bash
 # raspi-config
 
