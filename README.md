@@ -16,11 +16,12 @@ For deployment get the Pi Zero, way cheaper and much smaller. https://www.amazon
 For storage, use the 32GB SD card, just a few dollars more than 16GB, and allows for future expansion and other projects.
 https://www.amazon.com/PNY-Elite-microSDHC-Memory-P-SDU32GU185GW-GE/dp/B01MY8WGV7/ref=sr_1_12?crid=2L2CRB2OOAP4X&dchild=1&keywords=32gb%2Bmicro%2Bsd%2Bcard&qid=1587993513&s=electronics&sprefix=32GB%2Bmicro%2Celectronics%2C214&sr=1-12&th=1
 
-Use this cool USB adapter to power your Pi Zero, it plugs right into any USB slot like on the Epever Triton series... https://www.amazon.com/gp/product/B07NKNBZYG/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1
+Use this neat USB adapter to power your Pi Zero, it plugs right into any USB slot like on the Epever Triton series... https://www.amazon.com/gp/product/B07NKNBZYG/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1
  
 Then you run a usb/rs485 or RS232 cable (depending on what your connecting to) from the Pi, straight into the data port of the device you want to monitor. 
-I like these light weight PL2303 RS232 cables.
-https://www.amazon.com/gp/product/B07554Z4LX/ref=ppx_yo_dt_b_asin_title_o02_s01?ie=UTF8&psc=1
+Use a quality RS232 cable to avoid problems.
+
+https://www.amazon.com/DTECH-Serial-Adapter-Supports-Windows/dp/B079LZSF32/ref=dp_prsubs_1?pd_rd_i=B079LZSF32&psc=1
 
 For Modbus and RS485 connections, use these cables.
 https://www.amazon.com/JBtek-Converter-Adapter-ch340T-Supported/dp/B00NKAJGZM/ref=sr_1_24?dchild=1&keywords=modbus+485+cable&qid=1607638123&sr=8-24
