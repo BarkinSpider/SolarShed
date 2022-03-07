@@ -19,14 +19,19 @@ https://www.amazon.com/PNY-Elite-microSDHC-Memory-P-SDU32GU185GW-GE/dp/B01MY8WGV
 Use this neat USB adapter to power your Pi Zero, it plugs right into any USB slot like on the Epever Triton series... https://www.amazon.com/gp/product/B07NKNBZYG/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1
  
 Then you run a usb/rs485 or RS232 cable (depending on what your connecting to) from the Pi, straight into the data port of the device you want to monitor. 
-Use a quality RS232 cable to avoid problems.
+
+To connect the full size USB cable to a Pi Zero, you will need an USB->microUSB adapter.
+
+Only use a quality RS232 cable to avoid problems.
 
 https://www.amazon.com/DTECH-Serial-Adapter-Supports-Windows/dp/B079LZSF32/ref=dp_prsubs_1?pd_rd_i=B079LZSF32&psc=1
 
+To break out a DB5 port using the cable above use
+
+https://www.amazon.com/gp/aw/d/B073H9B6ZZ?psc=1&ref=ppx_pop_mob_b_asin_title
+
 For Modbus and RS485 connections, use these cables.
 https://www.amazon.com/JBtek-Converter-Adapter-ch340T-Supported/dp/B00NKAJGZM/ref=sr_1_24?dchild=1&keywords=modbus+485+cable&qid=1607638123&sr=8-24
-
-To connect the full size USB cable to a Pi Zero, you will need an USB->microUSB adapter.
 
 Once Raspian light OS (no GUI) is installed, and the OS updates in my cheat sheet are done, 
 the monitoring suite of Grafana, Prometheus and node_exporter will be installed on your Pi and be configured ready for use.
