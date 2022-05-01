@@ -213,8 +213,8 @@ if (result.registers):
 # D0: 1 Running, 0 Standby.
 
 
-        print(b"0x3200: batteryStatus: %b bits" % (format(batteryStatus, 'b').zfill(16)))
-        print(b"0x3201: equipStatus: %b bits" % (format(equipStatus, 'b').zfill(16)))
+        print("0x3200: batteryStatus: %s bits" % (format(batteryStatus, 'b').zfill(16)))
+        print("0x3201: equipStatus: %s bits" % (format(equipStatus, 'b').zfill(16)))
 
         flags.asByte = equipStatus
 
