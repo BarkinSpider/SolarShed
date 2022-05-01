@@ -149,7 +149,7 @@ if (result.registers):
         batSOC                  = float(result.registers[0])
         remoteBatTemp           = result.registers[1]
 
-        print("0x311A: Battery S.O.C: %.2f %" % (batSOC))
+        print("0x311A: Battery S.O.C: %.2f %%" % (batSOC))
         #print "0x311B: remoteBatTemp:",        remoteBatTemp, "c"
 else:
         print("No data for 0x311A!")
