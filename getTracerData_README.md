@@ -13,7 +13,16 @@ pyepsolartracer origin: [pyepsolartracer](https://github.com/kasbert/epsolar-tra
 
 The output of data (a.k.a prints to stdout) was left as in the original file. Adjust in your own need. I tried to keep the formating as the previous Python 2 version.
 
-## Example output:
+## Notes
+
+I've noticed few things that are needed to adjust in order to get the script working:
+- in `getTracerData.py` there's a hardcoded path in line 73 to the kernel module, adjust that if needed
+- create a ramdisk (refer to `exportData.sh`)
+- in `exportData.sh` there are plenty of hardcoded paths, adjust it aswell
+- if running this script as standard user, ensure that the user has executable permissions both to `exportData.sh` and `getTracerData.py`
+- in case of errors accessing the /dev/USBxxx device as the standard user, you may add the user either to `tty` or `dialup` groups and relog (ex. `sudo usermod -a -G tty yourname`)
+
+## Example output
 
 ```shell
 {0: b'EPsolar Tech co., Ltd', 1: b'TriRon3210', 2: b'V01.56+V01.22'}
