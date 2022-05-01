@@ -1,7 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
-#### Python 2 code - dont use Python 3! #######
-##### I will update this to Python 3 shortly ########
 #
 # Description: Read tracer series RS485 serial output on Pi4/Zero USB/serial port and write
 # the data to a STDOUT. Redirect this to file with
@@ -26,13 +24,12 @@
 #
 import os
 import sys
-import time
 import serial
 import ctypes
 #
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 from pymodbus.mei_message import *      # ReadDeviceInformationRequest()
-from pyepsolartracer.registers import registers,coils
+from pyepsolartracer.registers import registers,coils # From https://github.com/kasbert/epsolar-tracer/tree/master/pyepsolartracer
 #
 DEBUG=0
 
@@ -86,7 +83,7 @@ else:
 request = ReadDeviceInformationRequest(unit=1)
 response = client.execute(request)
 # print "Response:"
-print(repr(response.information)) + "\n"
+print(repr(response.information) + "\n")
 
 ####################################
 
@@ -108,13 +105,13 @@ if (result.registers):
         if (batteryChargePowerH != 0):
                 batteryChargePowerL += 640
 
-        print("0x3100: pvVoltage:{}v").format(pvVoltage)
-        print("0x3101: pvCurrent:{}a").format(pvCurrent)
-        print("0x3102: pvPowerL:{}w").format(pvPowerL)
+        print("0x3100: pvVoltage: %.2f v" % (pvVoltage))
+        print("0x3101: pvCurrent: %.2f a" % (pvCurrent))
+        print("0x3102: pvPowerL: %.2f w" % (pvPowerL))
         #print "0x3103: pvPowerH:",             pvPowerH,       "v"
-        print("0x3104: batteryChargeV:{}v").format(batteryChargeV)
-        print("0x3105: batteryChargeC:{}a").format(batteryChargeC)
-        print("0x3106: batteryChargePowerL:{}w").format(batteryChargePowerL)
+        print("0x3104: batteryChargeV: %.2f v" % (batteryChargeV))
+        print("0x3105: batteryChargeC: %.2f a" % (batteryChargeC))
+        print("0x3106: batteryChargePowerL: %.2f w" % (batteryChargePowerL))
         #print "0x3107: batteryChargePowerH:",  batteryChargePowerH, "v"
 
 else:
@@ -136,12 +133,12 @@ if (result.registers):
         if (loadPowerH != 0):
                 loadPowerL += 640
 
-        print("0x310C: loadVoltage:{}v").format(loadVoltage)
-        print("0x310D: loadCurrent:{}a").format(loadCurrent)
-        print("0x310E: loadPowerL:{}w").format(loadPowerL)
+        print("0x310C: loadVoltage: %.2f v" % (loadVoltage))
+        print("0x310D: loadCurrent: %.2f a" % (loadCurrent))
+        print("0x310E: loadPowerL: %.2f w" % (loadPowerL))
         #print "0x310F: loadPowerH:",           loadPowerH,     "w"
-        print("0x3110: batteryTemp:{}c {}f").format(batteryTemp, ((1.8*batteryTemp)+32))
-        print("0x3111: deviceTemp:{}c {}f").format(deviceTemp, ((1.8*deviceTemp)+32))
+        print("0x3110: batteryTemp: %.2f c %.2f f" % (batteryTemp, ((1.8*batteryTemp)+32)))
+        print("0x3111: deviceTemp: %.2f c %.2f f" % (deviceTemp, ((1.8*deviceTemp)+32)))
         #print "0x3112: compTemp:",             compTemp  ,     "v"
 else:
         print("No data for 0x3100!")
@@ -152,7 +149,7 @@ if (result.registers):
         batSOC                  = float(result.registers[0])
         remoteBatTemp           = result.registers[1]
 
-        print("0x311A: Battery S.O.C:{}%").format(batSOC)
+        print("0x311A: Battery S.O.C: %.2f %" % (batSOC))
         #print "0x311B: remoteBatTemp:",        remoteBatTemp, "c"
 else:
         print("No data for 0x311A!")
@@ -176,13 +173,13 @@ if (result.registers):
         if (genEnergyTodayH != 0):
                 genEnergyTodayL += 640
 
-        print("0x3300: pvMaxInVolts:{}v").format(float(pvMaxInVolts) / 100)
-        print("0x3301: pvMinInVolts:{}v").format(float(pvMinInVolts) / 100)
-        print("0x3302: batMaxVolts:{}v").format(float(batMaxVolts) / 100)
-        print("0x3303: batMinVolts:{}v").format(float(batMinVolts) / 100)
-        print("0x3304: consumedEnergyTodayL:{}w/h").format(consumedEnergyTodayL * 10)
+        print("0x3300: pvMaxInVolts: %.2f v" % (float(pvMaxInVolts) / 100))
+        print("0x3301: pvMinInVolts: %.2f v" % (float(pvMinInVolts) / 100))
+        print("0x3302: batMaxVolts: %.2f v" % (float(batMaxVolts) / 100))
+        print("0x3303: batMinVolts: %.2f v" % (float(batMinVolts) / 100))
+        print("0x3304: consumedEnergyTodayL: %d w/h" % (consumedEnergyTodayL * 10))
         #print "0x3305: consumedEnergyTodayH:", consumedEnergyTodayH,           "w"
-        print("0x330C: genEnergyTodayL:{}w/h").format(genEnergyTodayL * 10)
+        print("0x330C: genEnergyTodayL: %d w/h" % (genEnergyTodayL * 10))
         #print "0x330D: genEnergyTodayH:",      genEnergyTodayH,                "w"
 else:
         print("No data for 0x3200!")
@@ -216,8 +213,8 @@ if (result.registers):
 # D0: 1 Running, 0 Standby.
 
 
-        print("0x3200: batteryStatus:{}bits").format(format(batteryStatus, 'b').zfill(16))
-        print("0x3201: equipStatus:{}bits").format(format(equipStatus, 'b').zfill(16))
+        print("0x3200: batteryStatus: %b bits" % (format(batteryStatus, 'b').zfill(16)))
+        print("0x3201: equipStatus: %b bits" % (format(equipStatus, 'b').zfill(16)))
 
         flags.asByte = equipStatus
 
@@ -232,10 +229,10 @@ if (result.registers):
         else:
                 chargeStatusStr = "Error"
 
-        print("runningOk: %i"    % flags.bit.runningOk)
-        print("fault: %i"        % flags.bit.fault)
+        print("runningOk: %i" % flags.bit.runningOk)
+        print("fault: %i" % flags.bit.fault)
         print("chargeStatus: %i" % flags.bit.chargeStatus, chargeStatusStr)
-        print("pvError: %i"      % flags.bit.pvError)
+        print("pvError: %i" % flags.bit.pvError)
 
 else:
         print("No data for 0x3200!")
@@ -261,21 +258,21 @@ if (result.registers):
         loVDiscon       = result.registers[13]
         dischargeLimitV = result.registers[14]
 
-        print("0x9000: batType:{}").format(batType)
-        print("0x9001: batCap:{}ah").format(batCap)
-        print("0x9002: batComp:{}").format(batComp)
-        print("0x9003: hiVDiscon:{}v").format(float(hiVDiscon) / 100)
-        print("0x9004: chargeLimitV:{}v").format(float(chargeLimitV) / 100)
-        print("0x9005: overVRecon:{}v").format(float(overVRecon) / 100)
-        print("0x9006: eqVolts:{}v").format(float(eqVolts) / 100)
-        print("0x9007: boostV:{}v").format(float(boostV) / 100)
-        print("0x9008: floatV:{}v").format(float(floatV) / 100)
-        print("0x9009: boostReconV:{}v").format(float(boostReconV) / 100)
-        print("0x900A: loVRecon:{}v").format(float(loVRecon) / 100)
-        print("0x900B: underVRecover:{}v").format(float(underVRecover) / 100)
-        print("0x900C: underVWarn:{}v").format(float(underVWarn) / 100)
-        print("0x90OD: loVDiscon:{}v").format(float(loVDiscon) / 100)
-        print("0x900E: dischargeLimitV:{}v").format(float(dischargeLimitV) / 100)
+        print("0x9000: batType: %s" % batType)
+        print("0x9001: batCap: %s ah" % batCap)
+        print("0x9002: batComp: %s" % batComp)
+        print("0x9003: hiVDiscon: %.2f v" % (float(hiVDiscon) / 100))
+        print("0x9004: chargeLimitV: %.2f v" % (float(chargeLimitV) / 100))
+        print("0x9005: overVRecon: %.2f v" % (float(overVRecon) / 100))
+        print("0x9006: eqVolts: %.2f v" % (float(eqVolts) / 100))
+        print("0x9007: boostV: %.2f v" % (float(boostV) / 100))
+        print("0x9008: floatV: %.2f v" % (float(floatV) / 100))
+        print("0x9009: boostReconV: %.2f v" % (float(boostReconV) / 100))
+        print("0x900A: loVRecon: %.2f v" % (float(loVRecon) / 100))
+        print("0x900B: underVRecover: %.2f v" % (float(underVRecover) / 100))
+        print("0x900C: underVWarn: %.2f v" % (float(underVWarn) / 100))
+        print("0x90OD: loVDiscon: %.2f v" % (float(loVDiscon) / 100))
+        print("0x900E: dischargeLimitV: %.2f v" % (float(dischargeLimitV) / 100))
 else:
         print("No data for 0x9000!")
 
