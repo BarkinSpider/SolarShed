@@ -2,12 +2,7 @@
 
 ## Reason
 
-There was a huge need to have this script running without any issues under latest Python3 (Python 3.10.4) with all the necessary dependencies.
-
-## External dependency
-
-This script required registers and coils from a separate project. In order to make this script work I've included that module into this repo. If there's a better way, please don't hesitate to notify me about it.
-pyepsolartracer origin: [pyepsolartracer](https://github.com/kasbert/epsolar-tracer/tree/master/pyepsolartracer)
+There was a huge need to have this script running without any issues under latest Python3 (Python **3.10.4**) with all the necessary dependencies.
 
 ## Remarks
 
@@ -16,13 +11,25 @@ The output of data (a.k.a prints to stdout) was left as in the original file. Ad
 ## Notes
 
 I've noticed few things that are needed to adjust in order to get the script working:
-- in `getTracerData.py` there's a hardcoded path in line 73 to the kernel module, adjust that if needed
-- create a ramdisk (refer to `exportData.sh`)
-- in `exportData.sh` there are plenty of hardcoded paths, adjust it aswell
-- if running this script as standard user, ensure that the user has executable permissions both to `exportData.sh` and `getTracerData.py`
+- in `getTracerData.py` there's a hardcoded path in **line 72** to the kernel module, adjust that if needed
+- create and use a ramdisk (refer to `exportData.sh`) to save flash storage (SD card)
+- in `runGetSolarData.sh` adjust `workdir` and `ramDiskDir` variables if needed
+- in `exportData.sh` adjust `unitName`, `ramDiskDir` and `dataFile` variables if needed
+- if running this script as standard user, ensure that the user has executable permissions to `runGetSolarData.sh` and `getTracerData.py`
 - in case of errors accessing the /dev/USBxxx device as the standard user, you may add the user either to `tty` or `dialup` groups and relog (ex. `sudo usermod -a -G tty yourname`)
 
-## Example output
+## Quick install tips
+
+- clone repo and go there
+- install python3, python3-venv, pip3 and upgrade pip
+- install dependencies from `requirements.txt` file (`python3 -m pip install -r requirements.txt`)
+- prepare a ramdisk
+- install the correct USB driver and load the kernel module in order to have `cdc_xr_usb_serial 1-3.1:1.0: ttyXR_USB_SERIAL0: USB XR_USB_SERIAL device` ready (or similar name)
+- ensure files have correct permissions and paths inside them are correct
+- start collecting data for Prometheus with the wrapper script (`runGetSolarData.sh`)
+- (optional) - consider adding that script to a crontab like (`@reboot sleep 30 && nohup /path/to/wrapper/script/runGetSolarData.sh &`) to make it run after every reboot (ex. powerloss)
+
+## Example output from getTracerData.py
 
 ```shell
 {0: b'EPsolar Tech co., Ltd', 1: b'TriRon3210', 2: b'V01.56+V01.22'}
@@ -69,3 +76,7 @@ pvError: 0
 
 Battery is Charging in Standby mode at 0.0 Watts
 ```
+
+## Example output from exportData.sh (ready for Prometheus)
+
+TODO: Dump output.

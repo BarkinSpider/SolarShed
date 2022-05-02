@@ -29,7 +29,6 @@ import ctypes
 #
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 from pymodbus.mei_message import *      # ReadDeviceInformationRequest()
-from pyepsolartracer.registers import registers,coils # From https://github.com/kasbert/epsolar-tracer/tree/master/pyepsolartracer
 #
 DEBUG=0
 
@@ -67,7 +66,7 @@ client = ModbusClient(  method = 'rtu',
 
 connection = client.connect()
 if (connection == 1):
-        if (DEBUG): print("connection: {}").format(connection)
+        if (DEBUG): print("connection: " + repr(connection))
 else:
         print("connection: trying insmod")
         cmd = "/sbin/insmod /home/solar/xr_usb_serial_common-1a/xr_usb_serial_common.ko"
