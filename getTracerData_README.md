@@ -76,7 +76,3 @@ pvError: 0
 
 Battery is Charging in Standby mode at 0.0 Watts
 ```
-
-## Example output from exportData.sh (ready for Prometheus)
-
-TODO: Dump output.
